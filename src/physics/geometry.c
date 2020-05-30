@@ -1,6 +1,7 @@
 // Copyright 2020 | Pradeep Suresh | University of Michigan
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "../../include/structures/geometry.h"
 
 
@@ -33,19 +34,23 @@ polygon_t makePolygon(line_t* edges, int num_edges) {
 polygon_t createPolygon(double* x_vertices, double* y_vertices, int num_edges) {
     // Create N points
     point_t* vertices = calloc(num_edges, sizeof(point_t));
-
-    for (int i = 0; i < num_edges; ++i) {
-        vertices[i] = createPoint(x_vertices[i], y_vertices[i]);
-    }
-
-    // Create edges from points
     line_t* edges = calloc(num_edges, sizeof(line_t));
+    polygon_t polygon;
+    polygon.num_edges = num_edges;
     for (int i = 0; i < num_edges; ++i) {
-        edges[i] = makeLine(&vertices[i], &vertices[(i + 1) % 4]);
+        int next = (i + 1) % num_edges;
+        vertices[i].x = x_vertices[i];
+        vertices[i].y = y_vertices[i];
+        vertices[next].x = x_vertices[next];
+        vertices[next].y = y_vertices[next];
+        edges[i].start = &vertices[i];
+        edges[i].end = &vertices[next];
+        polygon.edges[i] = &edges[i];
     }
-
-    // Create polygon from edges
-    polygon_t polygon = makePolygon(edges, num_edges);
-
     return polygon;
+}
+
+void destroyPolygon(polygon_t* polygon) {
+    free(polygon->edges[0]->start);
+    free(polygon->edges[0]);
 }

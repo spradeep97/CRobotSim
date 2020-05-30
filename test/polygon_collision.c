@@ -27,4 +27,7 @@ void test_is_collide(void) {
     polygon_t square2 = createPolygon(v2_x, v2_y, 4);
 
     printf("collision:%d\n", is_collide(&square, &square2));
+
+    destroyPolygon(&square);
+    destroyPolygon(&square2);
 }

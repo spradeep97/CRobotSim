@@ -38,4 +38,7 @@ polygon_t makePolygon(line_t* edges, int num_edges);
 // creates a polygon from arrays of vertices' x and y co-ordinates
 polygon_t createPolygon(double* vertices_x, double* vertices_y, int num_edges);
 
+// frees the memory allocated in createPolygon
+void destroyPolygon(polygon_t* polygon);
+
 #endif  // STRUCTURES_GEOMETRY_H_
