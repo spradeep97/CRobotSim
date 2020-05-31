@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "../../include/structures/geometry.h"
 
 
@@ -53,4 +54,41 @@ polygon_t createPolygon(double* x_vertices, double* y_vertices, int num_edges) {
 void destroyPolygon(polygon_t* polygon) {
     free(polygon->edges[0]->start);
     free(polygon->edges[0]);
+}
+
+void translatePolygon(polygon_t* polygon, double x, double y) {
+    for (int i = 0; i < polygon->num_edges; ++i) {
+        polygon->edges[i]->start->x += x;
+        polygon->edges[i]->start->y += y;
+    }
+}
+
+void rotatePolygon(polygon_t* polygon, double angleInRad) {
+    translatePolygon(polygon, -polygon->rotationPoint.x,
+                     -polygon->rotationPoint.y);
+    for (int i = 0; i < polygon->num_edges; ++i) {
+        double old_x = polygon->edges[i]->start->x;
+        double old_y = polygon->edges[i]->start->y;
+        polygon->edges[i]->start->x =
+        old_x * cos(angleInRad) - old_y * sin(angleInRad);
+        polygon->edges[i]->start->y =
+        old_x * sin(angleInRad) + old_y * cos(angleInRad);
+    }
+    translatePolygon(polygon, polygon->rotationPoint.x,
+                     polygon->rotationPoint.y);
+}
+
+void setPolygonRotationCenter(polygon_t* polygon, point_t center) {
+    polygon->rotationPoint = center;
+}
+
+point_t calculatePolygonCenter(polygon_t* polygon) {
+    point_t polygonCenter;
+    for (int i = 0; i < polygon->num_edges; ++i) {
+        polygonCenter.x += polygon->edges[i]->start->x;
+        polygonCenter.y += polygon->edges[i]->start->y;
+    }
+    polygonCenter.x /= polygon->num_edges;
+    polygonCenter.y /= polygon->num_edges;
+    return polygonCenter;
 }

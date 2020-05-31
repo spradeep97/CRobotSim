@@ -18,6 +18,7 @@ typedef struct line {
 typedef struct polygon {
     int num_edges;
     line_t* edges[MAX_NUM_VERTICES];
+    point_t rotationPoint;
 } polygon_t;
 
 /* --- STRUCTURE INITIALIZERS --- */
@@ -40,5 +41,19 @@ polygon_t createPolygon(double* vertices_x, double* vertices_y, int num_edges);
 
 // frees the memory allocated in createPolygon
 void destroyPolygon(polygon_t* polygon);
+
+/* --- GEOMETRIC OPERATIONS --- */
+
+// translates the polygon by specified amounts in x and y directions
+void translatePolygon(polygon_t* polygon, double x, double y);
+
+// calculates center of a regular polygon
+point_t calculatePolygonCenter(polygon_t* polygon);
+
+// explicitly sets the point about which polygon would be rotated
+void setPolygonRotationCenter(polygon_t* polygon, point_t center);
+
+// rotates all points of the polygon about its rotation center
+void rotatePolygon(polygon_t* polygon, double angleInRad);
 
 #endif  // STRUCTURES_GEOMETRY_H_
