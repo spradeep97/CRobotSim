@@ -6,8 +6,6 @@
 #include "../../include/structures/geometry.h"
 #include "../../include/physics/collision.h"
 
-#define M_PI 3.141592653589
-
 bool is_collide(polygon_t* polygon1, polygon_t* polygon2) {
     int numEdgesP1 = polygon1->num_edges;
     int numEdgesP2 = polygon2->num_edges;
