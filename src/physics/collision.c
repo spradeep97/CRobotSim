@@ -62,3 +62,38 @@ double compute_crossProduct(line_t* edge, point_t* point) {
     return ((edge->end->x - edge->start->x) * (edge->start->y - point->y) -
             (edge->end->y - edge->start->y) * (edge->start->x - point->x));
 }
+
+bool is_polygon_contained(polygon_t* polygon1, polygon_t* polygon2) {
+    polygon_t* polygonList[2] = {polygon1, polygon2};
+    for (int i = 0; i < 2; ++i) {
+        polygon_t* currentPolygon = polygonList[i];
+        polygon_t* remainingPolygon = polygonList[1 - i];
+        for (int edgeId = 0;
+             edgeId < remainingPolygon->num_edges;
+             ++edgeId) {
+                 if (is_point_contained(currentPolygon,
+                      remainingPolygon->edges[edgeId]->start)) {
+                    // Assuming that the polygons don't intersect
+                    return true;
+                 }
+        }
+    }
+    return false;
+}
+
+bool is_point_contained(polygon_t* polygon1, point_t* point) {
+    int positiveProducts = 0, negativeProducts = 0;
+    for (int edgeId = 0; edgeId < polygon1->num_edges; ++edgeId) {
+        double product = compute_crossProduct(polygon1->edges[edgeId], point);
+        if (product < 0) {
+            negativeProducts++;
+        } else {
+            positiveProducts++;
+        }
+    }
+    if (negativeProducts == polygon1->num_edges ||
+        positiveProducts == polygon1->num_edges) {
+        return true;
+        }
+    return false;
+}

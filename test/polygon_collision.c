@@ -5,9 +5,11 @@
 
 void test_compute_crossProduct(void);
 void test_is_collide(void);
+void test_is_contain(void);
 
 int main(void) {
     test_is_collide();
+    test_is_contain();
 }
 
 void test_compute_crossProduct(void) {
@@ -27,6 +29,22 @@ void test_is_collide(void) {
     polygon_t square2 = createPolygon(v2_x, v2_y, 4);
 
     printf("collision:%d\n", is_collide(&square, &square2));
+
+    destroyPolygon(&square);
+    destroyPolygon(&square2);
+}
+
+void test_is_contain(void) {
+    double v_x[4] = {-1.0, -1.0, 1.0, 1.0};
+    double v_y[4] = {-1.0, 1.0, 1.0, -1.0};
+    double v2_x[4] = {-1.5, -1.5, 0.5, 0.5};
+    double v2_y[4] = {-2.0, 2.0, 2.0, -2.0};
+
+    polygon_t square = createPolygon(v_x, v_y, 4);
+
+    polygon_t square2 = createPolygon(v2_x, v2_y, 4);
+
+    printf("containment:%d\n", is_polygon_contained(&square, &square2));
 
     destroyPolygon(&square);
     destroyPolygon(&square2);

@@ -20,4 +20,10 @@ bool give_judgement(double* crossProducts);
 // computes cross product between line and a point
 double compute_crossProduct(line_t* edge, point_t* point);
 
+// checks if a point lies within a polygon
+bool is_point_contained(polygon_t* polygon1, point_t* point);
+
+// checks if one of the polygons is completely contained within the other
+bool is_polygon_contained(polygon_t* polygon1, polygon_t* polygon2);
+
 #endif  // PHYSICS_COLLISION_H_
