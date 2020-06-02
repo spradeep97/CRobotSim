@@ -1,14 +1,9 @@
 // Copyright 2020 | Pradeep Suresh | University of Michigan
 #pragma once
 
-#include <stdint.h>
+#include "./pixel_t.h"
 
 #define VECTOR_INIT_CAPACITY 4
-
-typedef struct pixel {
-    int32_t x;
-    int32_t y;
-} pixel_t;
 
 typedef struct vector_xy_i32 {
     pixel_t *data;
