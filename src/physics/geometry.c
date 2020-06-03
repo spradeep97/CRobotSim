@@ -92,3 +92,16 @@ point_t calculatePolygonCenter(polygon_t* polygon) {
     polygonCenter.y /= polygon->num_edges;
     return polygonCenter;
 }
+
+point_t findMinCoordinate(polygon_t* polygon) {
+    point_t minCoordinate = {1000.0, 1000.0};
+    for (int i = 0; i < polygon->num_edges; ++i) {
+        if (polygon->edges[i]->start->x < minCoordinate.x) {
+            minCoordinate.x = polygon->edges[i]->start->x;
+        }
+        if (polygon->edges[i]->start->y < minCoordinate.y) {
+            minCoordinate.y = polygon->edges[i]->start->y;
+        }
+    }
+    return minCoordinate;
+}

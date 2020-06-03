@@ -10,12 +10,14 @@ void test_is_collide(void);
 void test_is_contain(void);
 void test_translatePolygon(void);
 void test_rotatePolygon(void);
+void test_findMinCoordinate(void);
 
 int main(void) {
     // test_is_collide();
     // test_is_contain();
     // test_translatePolygon();
-    test_rotatePolygon();
+    // test_rotatePolygon();
+    test_findMinCoordinate();
 }
 
 void test_compute_crossProduct(void) {
@@ -72,4 +74,13 @@ void test_rotatePolygon(void) {
     point_t rightBottomCorner = {1, -1};
     setPolygonRotationCenter(&square, rightBottomCorner);
     rotatePolygon(&square, M_PI / 2);
+}
+
+void test_findMinCoordinate(void) {
+    double v_x[4] = {-1.0, -1.0, 1.0, 1.0};
+    double v_y[4] = {-1.0, 1.0, 1.0, -1.0};
+    polygon_t square = createPolygon(v_x, v_y, 4);
+
+    point_t minCoordinate = findMinCoordinate(&square);
+    printf("x_min:%f | y_min:%f\n", minCoordinate.x, minCoordinate.y);
 }
