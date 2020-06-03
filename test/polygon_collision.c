@@ -63,6 +63,7 @@ void test_translatePolygon(void) {
     double v_y[4] = {-1.0, 1.0, 1.0, -1.0};
     polygon_t square = createPolygon(v_x, v_y, 4);
     translatePolygon(&square, 10, 10);
+    destroyPolygon(&square);
 }
 
 void test_rotatePolygon(void) {
@@ -74,13 +75,15 @@ void test_rotatePolygon(void) {
     point_t rightBottomCorner = {1, -1};
     setPolygonRotationCenter(&square, rightBottomCorner);
     rotatePolygon(&square, M_PI / 2);
+    destroyPolygon(&square);
 }
 
 void test_findMinCoordinate(void) {
-    double v_x[4] = {-1.0, -1.0, 1.0, 1.0};
+    double v_x[4] = {-10.0, -1.0, 1.0, 1.0};
     double v_y[4] = {-1.0, 1.0, 1.0, -1.0};
     polygon_t square = createPolygon(v_x, v_y, 4);
 
     point_t minCoordinate = findMinCoordinate(&square);
     printf("x_min:%f | y_min:%f\n", minCoordinate.x, minCoordinate.y);
+    destroyPolygon(&square);
 }
