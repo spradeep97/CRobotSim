@@ -20,3 +20,8 @@ vector_xy_i32_t* rasterize_polygon(polygon_t* polygon);
 void draw_unfilled_polygon(bitmap_t* bmp,
                            polygon_t* polygon,
                            color_bgr_t color);
+
+// Draws a filled polygon on bmp with specified colour
+void draw_filled_polygon(bitmap_t* bmp,
+                         polygon_t* polygon,
+                         color_bgr_t color);

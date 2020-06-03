@@ -95,3 +95,64 @@ void draw_unfilled_polygon(bitmap_t* bmp,
     vector_xy_i32_free(round_polygon);
     free(round_polygon);
 }
+
+void draw_filled_polygon(bitmap_t* bmp,
+                         polygon_t* polygon,
+                         color_bgr_t color) {
+    vector_xy_i32_t* round_polygon = rasterize_polygon(polygon);
+    int num_edges = polygon->num_edges;
+    int* x_left = malloc(bmp->height * sizeof(int));
+    int* x_right = malloc(bmp->height * sizeof(int));
+
+    // Fill x_left and x_right with -1
+    for (int i = 0; i < bmp->height; ++i) {
+        x_left[i] = -1;
+        x_right[i] = -1;
+    }
+
+    int y_min = 10000, y_max = -1;
+    for (int edgeId = 0; edgeId < num_edges; ++edgeId) {
+        int32_t x0 = round_polygon->data[edgeId].x;
+        int32_t y0 = round_polygon->data[edgeId].y;
+        int32_t x1 = round_polygon->data[(edgeId + 1) % round_polygon->size].x;
+        int32_t y1 = round_polygon->data[(edgeId + 1) % round_polygon->size].y;
+
+        vector_xy_i32_t* rasterizedEdge = rasterize_line(x0, y0, x1, y1);
+        for (int pointId = 0; pointId < rasterizedEdge->size; ++pointId) {
+            int x = rasterizedEdge->data[pointId].x;
+            int y = rasterizedEdge->data[pointId].y;
+            if (x_left[y] == -1) {
+                x_left[y] = x;
+                x_right[y] = x;
+            } else {
+                if (x_left[y] > x) {
+                    x_left[y] = x;
+                }
+                if (x_right[y] < x) {
+                    x_right[y] = x;
+                }
+            }
+
+            if (y_min > y) {
+                y_min = y;
+            }
+            if (y_max < y) {
+                y_max = y;
+            }
+        }
+
+        for (int height = y_min; height <= y_max; ++height) {
+            draw_line(bmp, x_left[height], height, x_right[height], height,
+                      color);
+        }
+
+        gx_set_pixels(bmp, rasterizedEdge, color);
+        vector_xy_i32_free(rasterizedEdge);
+        free(rasterizedEdge);
+    }
+
+    free(x_left);
+    free(x_right);
+    vector_xy_i32_free(round_polygon);
+    free(round_polygon);
+}
