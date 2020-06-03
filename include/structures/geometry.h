@@ -56,6 +56,7 @@ void setPolygonRotationCenter(polygon_t* polygon, point_t center);
 // rotates all points of the polygon about its rotation center
 void rotatePolygon(polygon_t* polygon, double angleInRad);
 
+// Finds the minimum x and y coordinates individually
 point_t findMinCoordinate(polygon_t* polygon);
 
 #endif  // STRUCTURES_GEOMETRY_H_
