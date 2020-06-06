@@ -54,6 +54,9 @@ void test_filled_polygon(bitmap_t* bmp) {
     double v_x[4] = {100.0, 150.0, 150.0, 10.0};
     double v_y[4] = {10.0, 10.0, 150.0, 150.0};
     polygon_t square = createPolygon(v_x, v_y, 4);
+    point_t center = {102.5, 80};
+    setPolygonRotationCenter(&square, center);
+    rotatePolygon(&square, 1 * M_PI / 4);
     draw_filled_polygon(bmp, &square, black);
     destroyPolygon(&square);
 }
