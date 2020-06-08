@@ -16,6 +16,7 @@ void test_straight_line(bitmap_t* bmp);
 void test_unfilled_polygon(bitmap_t* bmp);
 void test_filled_polygon(bitmap_t* bmp);
 void test_createRectangle(bitmap_t* bmp);
+void test_createTriangle(bitmap_t* bmp);
 
 int main(void) {
     bitmap_t bmp = {0};
@@ -23,7 +24,7 @@ int main(void) {
     gx_clear(&bmp, white);
 
     // Insert test code here //
-    test_createRectangle(&bmp);
+    test_createTriangle(&bmp);
     // Test code ends //
 
     size_t bmp_size = bmp_calculate_size(&bmp);
@@ -69,4 +70,11 @@ void test_createRectangle(bitmap_t* bmp) {
     translatePolygon(&rectangle, 320, 240);
     draw_filled_polygon(bmp, &rectangle, black);
     destroyPolygon(&rectangle);
+}
+
+void test_createTriangle(bitmap_t* bmp) {
+    polygon_t triangle = createTriangle(4.0 / 3.0, 28);
+    translatePolygon(&triangle, 400, 400);
+    draw_filled_polygon(bmp, &triangle, black);
+    destroyPolygon(&triangle);
 }
