@@ -8,12 +8,14 @@
 #include "../include/graphics/drawing.h"
 #include "../include/graphics/graphics.h"
 #include "../include/physics/collision.h"
+#include "../include/graphics/shapes.h"\
 
 #define M_PI 3.141592653589793238462
 
 void test_straight_line(bitmap_t* bmp);
 void test_unfilled_polygon(bitmap_t* bmp);
 void test_filled_polygon(bitmap_t* bmp);
+void test_createRectangle(bitmap_t* bmp);
 
 int main(void) {
     bitmap_t bmp = {0};
@@ -21,7 +23,7 @@ int main(void) {
     gx_clear(&bmp, white);
 
     // Insert test code here //
-    test_unfilled_polygon(&bmp);
+    test_createRectangle(&bmp);
     // Test code ends //
 
     size_t bmp_size = bmp_calculate_size(&bmp);
@@ -60,4 +62,11 @@ void test_filled_polygon(bitmap_t* bmp) {
     rotatePolygon(&square, 1 * M_PI / 4);
     draw_filled_polygon(bmp, &square, black);
     destroyPolygon(&square);
+}
+
+void test_createRectangle(bitmap_t* bmp) {
+    polygon_t rectangle = createRectangle(600, 440);
+    translatePolygon(&rectangle, 320, 240);
+    draw_filled_polygon(bmp, &rectangle, black);
+    destroyPolygon(&rectangle);
 }
