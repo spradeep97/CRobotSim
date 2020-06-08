@@ -74,6 +74,7 @@ void test_createRectangle(bitmap_t* bmp) {
 
 void test_createTriangle(bitmap_t* bmp) {
     polygon_t triangle = createTriangle(4.0 / 3.0, 28);
+    rotatePolygon(&triangle, - M_PI / 6);
     translatePolygon(&triangle, 400, 400);
     draw_filled_polygon(bmp, &triangle, black);
     destroyPolygon(&triangle);
