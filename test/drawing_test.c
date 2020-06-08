@@ -21,7 +21,7 @@ int main(void) {
     gx_clear(&bmp, white);
 
     // Insert test code here //
-    test_filled_polygon(&bmp);
+    test_unfilled_polygon(&bmp);
     // Test code ends //
 
     size_t bmp_size = bmp_calculate_size(&bmp);
@@ -43,10 +43,11 @@ void test_straight_line(bitmap_t* bmp) {
 }
 
 void test_unfilled_polygon(bitmap_t* bmp) {
-    double v_x[4] = {10.0, 150.0, 150.0, 10.0};
-    double v_y[4] = {10.0, 10.0, 150.0, 150.0};
+    double v_x[4] = {-2.5, -2.5, 2.5, 2.5};
+    double v_y[4] = {-2.5, 2.5, 2.5, -2.5};
     polygon_t square = createPolygon(v_x, v_y, 4);
-    draw_unfilled_polygon(bmp, &square, black);
+    translatePolygon(&square, 2, 2);
+    draw_unfilled_polygon(bmp, &square, red);
     destroyPolygon(&square);
 }
 
