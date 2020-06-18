@@ -21,6 +21,17 @@ typedef struct polygon {
     point_t rotationPoint;
 } polygon_t;
 
+typedef struct pose2d {
+    double x_position;
+    double y_position;
+    double angleInRad;
+} pose2d_t;
+
+typedef struct direction_vector {
+    double x_component;
+    double y_component;
+} direction_vector_t;
+
 /* --- STRUCTURE INITIALIZERS --- */
 
 // creates a point from x and y co-ordinates
@@ -58,5 +69,17 @@ void rotatePolygon(polygon_t* polygon, double angleInRad);
 
 // Finds the minimum x and y coordinates individually
 point_t findMinCoordinate(polygon_t* polygon);
+
+// Returns distance between two given poses
+double findDistance(pose2d_t* pose1, pose2d_t* pose2);
+
+// Returns dot product between two given direction vectors
+double findDotProduct(direction_vector_t* vector1, direction_vector_t* vector2);
+
+// Returns normalized direction vector from first pose to seconf pose
+direction_vector_t findDirectionBetween(pose2d_t* pose1, pose2d_t* pose2);
+
+// Returns normalized direction vector which is at specified angle from x axis
+direction_vector_t findDirectionFromAngle(double angleInRad);
 
 #endif  // STRUCTURES_GEOMETRY_H_

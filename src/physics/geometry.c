@@ -5,7 +5,6 @@
 #include <math.h>
 #include "../../include/structures/geometry.h"
 
-
 point_t createPoint(double x, double y) {
     point_t p = {x, y};
     return p;
@@ -104,4 +103,35 @@ point_t findMinCoordinate(polygon_t* polygon) {
         }
     }
     return minCoordinate;
+}
+
+double findDistance(pose2d_t* pose1, pose2d_t* pose2) {
+    double delta_x = pose2->x_position - pose1->x_position;
+    double delta_y = pose2->y_position - pose1->y_position;
+    double distance = sqrt(delta_x * delta_x + delta_y * delta_y);
+    return distance;
+}
+
+double findDotProduct(direction_vector_t* vector1,
+                      direction_vector_t* vector2) {
+    return (vector1->x_component * vector2->x_component +
+           vector1->y_component * vector2->y_component);
+}
+
+direction_vector_t findDirectionBetween(pose2d_t* pose1, pose2d_t* pose2) {
+    direction_vector_t vector;
+    vector.x_component = pose2->x_position - pose1->x_position;
+    vector.y_component = pose2->y_position - pose1->y_position;
+    double length = sqrt(vector.x_component * vector.x_component +
+                         vector.y_component * vector.y_component);
+    vector.x_component /= length;
+    vector.y_component /= length;
+    return vector;
+}
+
+direction_vector_t findDirectionFromAngle(double angleInRad) {
+    direction_vector_t vector;
+    vector.x_component = cos(angleInRad);
+    vector.y_component = sin(angleInRad);
+    return vector;
 }
