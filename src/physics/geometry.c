@@ -47,6 +47,8 @@ polygon_t createPolygon(double* x_vertices, double* y_vertices, int num_edges) {
         edges[i].end = &vertices[next];
         polygon.edges[i] = &edges[i];
     }
+    polygon.rotationPoint.x = 0;
+    polygon.rotationPoint.y = 0;
     return polygon;
 }
 
