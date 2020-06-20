@@ -46,25 +46,24 @@ int main(int argc, char *argv[]) {
         int64_t nanoseconds = 40 * 1000 * 1000;
         struct timespec interval = {seconds, nanoseconds};
 
+        // Initialize world and graphics
         init_world(&world);
         init_graphics(&world, &bmp);
 
-        // for (int t_step = 0; t_step < time_steps; t_step++) {
-        //     move(&robot, &world);
-        //     resolve_collision(&robot, &world, &bmp);
-        //     update_graphics(&robot, &world, &bmp);
-        //     bmp_serialize(&bmp, serialized_bmp);
-        //     image_server_set_data(bmp_size, serialized_bmp);
-        //     image_server_start("8000");
-        //     nanosleep(&interval, NULL);
-        // }
-
+        // Create space in memory for bitmap's contents
         size_t bmp_size = bmp_calculate_size(&bmp);
         uint8_t *serialized_bmp = malloc(bmp_size);
-        bmp_serialize(&bmp, serialized_bmp);
-        image_server_set_data(bmp_size, serialized_bmp);
-        image_server_start("8000");
-        sleep(5);
+
+        // Main loop
+        for (int t_step = 0; t_step < time_steps; t_step++) {
+            moveTo_nextRobotPose(&world);
+            resolve_collision(&world);
+            update_graphics(&world, &bmp);
+            bmp_serialize(&bmp, serialized_bmp);
+            image_server_set_data(bmp_size, serialized_bmp);
+            image_server_start("8000");
+            nanosleep(&interval, NULL);
+        }
 
         destroy_world(&world);
         free(bmp.data);

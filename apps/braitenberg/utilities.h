@@ -18,3 +18,13 @@ void destroy_world(world_t* world);
 
 // Initialize the graphics
 void init_graphics(world_t* world, bitmap_t* bmp);
+
+// Moves to the next robot pose based on world's current state
+void moveTo_nextRobotPose(world_t* world);
+
+// Updates the graphics to reflect latest world state
+void update_graphics(world_t* world, bitmap_t* bmp);
+
+// Checks for collision between robot and lamps and resolves it
+void resolve_collision(world_t* world);
+

@@ -22,7 +22,7 @@
 
 #define NUM_LAMPS 3
 #define NUM_ROBOTS 1
-#define M_PI 3.141592653589793238462
+// #define M_PI 3.141592653589793238462
 
 
 typedef struct robot {
